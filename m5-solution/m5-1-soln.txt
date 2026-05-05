@@ -69,7 +69,7 @@ int main() {
     // Perform divide-and-conquer to sort players
     divideAndConquer(players, 0, N - 1);
 
-    // Print the final order of players
+    //     final order of players
     for (int i = 0; i < N; i++) cout << players[i] << "\n";
 
     return 0;
