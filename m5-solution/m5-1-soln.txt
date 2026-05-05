@@ -10,6 +10,9 @@ int N;
 // Declaration of compare function
 int compare(int player1, int player2, double v);
 
+
+// Partition function for quickselect
+
 int partition(vector<int> &players, int low, int high, double v) {
     int pivotIndex = low + rand() % (high - low + 1); // Random pivot
     swap(players[pivotIndex], players[high]);
