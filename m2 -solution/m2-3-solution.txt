@@ -1,0 +1,53 @@
+import java.lang.Math;
+
+class Soln {
+
+    int call_grader(int i)
+    {
+        int A[] = {1000, 2000, 3000, 4000, 5000,
+                   6000, 7000, 8000, 9000, 10000};
+        return A[i];
+    }
+
+    public static void main(String []args) {
+        int N = 10, T = 8400;
+        if (System.getenv("N") != null) N = Integer.parseInt(System.getenv("N"));
+        if (System.getenv("T") != null) T = Integer.parseInt(System.getenv("T"));
+
+        int left = 0;
+        int right = N - 1;
+        int bestIndex = -1;
+        int bestDiff = Integer.MAX_VALUE;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            int value = CompileWithSoln.call_grader(mid);  // replace with call_grader(mid) for testing
+            if (value == -1) break;
+
+            int diff = Math.abs(value - T);
+            if (diff < bestDiff) {
+                bestDiff = diff;
+                bestIndex = mid;
+            }
+
+            if (value < T) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        // Check neighbors (left and right) to be sure we didn't miss a closer one
+        for (int i = Math.max(0, bestIndex - 2); i <= Math.min(N - 1, bestIndex + 2); i++) {
+            int value = CompileWithSoln.call_grader(i);  // replace with call_grader(i) for testing
+            if (value == -1) continue;
+            int diff = Math.abs(value - T);
+            if (diff < bestDiff) {
+                bestDiff = diff;
+                bestIndex = i;
+            }
+        }
+
+        System.out.println(bestIndex);
+    }
+}
