@@ -59,7 +59,7 @@ void divideAndConquer(vector<int> &players, int low, int high) {
 int main() {
     srand(time(0)); // Seed random number generator
 
-    // Get the number of players from the environment variable or default to 30
+    // Get the No. of players from the environment variable or default to 30
     N = 30;
     if (getenv("N") != NULL) N = atoi(getenv("N"));
 
