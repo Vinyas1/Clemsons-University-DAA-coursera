@@ -21,7 +21,7 @@ class Soln {
 
         while (left <= right) {
             int mid = (left + right) / 2;
-            int value = CompileWithSoln.call_grader(mid);  // replace with call_grader(mid) for testing
+            int value = CompileWithSoln.call_grader(mid);   
             if (value == -1) break;
 
             int diff = Math.abs(value - T);
