@@ -1,0 +1,44 @@
+import java.lang.Math;
+
+class Soln {
+
+    // Local testing function (replace call_grader with this for testing)
+    double call_grader(int i)
+    {
+        return 8400 - Math.abs(84 - i) * 100;
+    }
+
+    public static void main(String[] args) {
+        int N = 100;
+        if (System.getenv("N") != null) N = Integer.parseInt(System.getenv("N"));
+
+        int left = 0, right = N - 1;
+
+        while (right - left > 3) {
+            int m1 = left + (right - left) / 3;
+            int m2 = right - (right - left) / 3;
+
+            double val1 = CompileWithSoln.call_grader(m1);  // replace with call_grader(m1) for testing
+            double val2 = CompileWithSoln.call_grader(m2);  // replace with call_grader(m2) for testing
+
+            if (val1 < val2) {
+                left = m1 + 1;
+            } else {
+                right = m2 - 1;
+            }
+        }
+
+        // Now scan the narrowed range [left...right] to find the exact max
+        int bestIndex = left;
+        double bestValue = -1;
+        for (int i = left; i <= right; i++) {
+            double val = CompileWithSoln.call_grader(i);  // replace with call_grader(i) for testing
+            if (val > bestValue) {
+                bestValue = val;
+                bestIndex = i;
+            }
+        }
+
+        System.out.println(bestIndex);
+    }
+}
