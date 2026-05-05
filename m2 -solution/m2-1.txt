@@ -1,0 +1,81 @@
+import java.util.*;
+
+// DO NOT ALTER CLASS NAME
+// The grading system checks for this specific class
+// name when compiling. Altering it will mean your
+// submission will fail to work correctly.
+class Soln {
+	// This function, CompileWithSoln.call_grader() (which
+	// will be compiled with our code when it is submitted to
+	// the grading system), takes a List of values of x and
+	// returns a List of values of f(x) for all of them.
+
+	// If you pass it a List of length more than K,
+	// you'll only get back the first K answers.
+	// If you call it more than R times, you'll start to
+	// get back empty Lists.
+	// If you pass any values of x outside [0,1], you'll
+	// get back corresponding values of -1.
+
+	/*
+		List<Double> CompileWithSoln.call_grader(List<Double> x);
+	*/
+
+	// For testing on your own system, you can call
+	// this function instead.  It uses a function f(x)
+	// that linearly increases up to a maximum of f(x) = 1
+	// at x = 0.8400, then it decreases linearly.
+	// Don't forget to switch your code back to calling
+	// CompileWithSoln.call_grader() above before submitting.
+    static List<Double> call_grader_local(List<Double> x)
+    {
+		List<Double> result = new ArrayList<Double>();
+		for (int i=0; i<x.size(); i++) {
+			result.add(1.0 - Math.abs(x.get(i) - 0.8400));
+		}
+        return result;
+    }
+
+    public static void main(String []args) {
+		// Values for K and R are set in the grading system
+		// through environment variables, if present.
+		// If these aren't present, the default values are K = 4, R = 7
+        int K = 4;
+		int R = 7;
+        if (System.getenv("K") != null) K = Integer.parseInt(System.getenv("K"));
+		if (System.getenv("R") != null) R = Integer.parseInt(System.getenv("R"));
+
+        double my_answer = 0.5;
+
+        // ----------------------------------------
+        // This is the part of main() you should modify.
+        // For each of R rounds,
+		// you can evaluate f(x) at K values of x
+		// (you are welcome to write other functions above
+		// and call them here, but all your code should be
+		// submitted in this one file).
+        double best = 0.0;
+        for (int i=0; i<R; i++) {
+			List<Double> x = new ArrayList<Double>();
+			// Right now, we're not being particularly smart --
+			// we're just evaluating at random values of x
+			// and taking whichever one was the best as our answer.
+			for (int j=0; j<K; j++) x.add(Math.random());
+			List<Double> y = call_grader_local(x); // call_grader_local needs to be switched to CompileWithSoln.call_grader when you submit!!
+			for (int j=0; j<K; j++) {
+				if (y.get(j) > best) {
+					best = y.get(j);
+					my_answer = x.get(j);
+				}
+			}
+        }
+        // --------------------------------------
+
+
+        // Afterwards, you should print out the value of x
+		// (a real number in the range [0,1]) that you think
+		// is closest to maximizing f(x). You should only
+		// print this number on standard output, nothing else.
+        System.out.println(my_answer);
+    }
+}
