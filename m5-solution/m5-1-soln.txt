@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib> // For rand()
+#include <ctime>   // For seeding rand()
+using namespace std;
+
+int N; // Global variable for the number of players
+
+// Declaration of compare function
+int compare(int player1, int player2, double v);
+
+// Partition function for quickselect
+int partition(vector<int> &players, int low, int high, double v) {
+    int pivotIndex = low + rand() % (high - low + 1); // Random pivot
+    swap(players[pivotIndex], players[high]);
+    int pivot = players[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (compare(players[j], pivot, v) < 0) {
+            i++;
+            swap(players[i], players[j]);
+        }
+    }
+    swap(players[i + 1], players[high]);
+    return i + 1;
+}
+
+// Quickselect algorithm
+void quickselect(vector<int> &players, int low, int high, int k, double v) {
+    if (low < high) {
+        int pi = partition(players, low, high, v);
+
+        if (pi == k) return;
+        else if (k < pi)
+            quickselect(players, low, pi - 1, k, v);
+        else
+            quickselect(players, pi + 1, high, k, v);
+    }
+}
+
+// Divide-and-conquer function
+void divideAndConquer(vector<int> &players, int low, int high) {
+    if (low >= high) return;
+
+    int mid = (low + high) / 2; // Split players into two groups
+    double v = 1.0 * (mid + 1) / N; // Calculate the dividing value
+
+    quickselect(players, low, high, mid, v); // Select the dividing point
+
+    // Recursively divide the two halves
+    divideAndConquer(players, low, mid - 1);
+    divideAndConquer(players, mid + 1, high);
+}
+
+int main() {
+    srand(time(0)); // Seed random number generator
+
+    // Get the number of players from the environment variable or default to 30
+    N = 30;
+    if (getenv("N") != NULL) N = atoi(getenv("N"));
+
+    vector<int> players;
+    for (int i = 0; i < N; i++) players.push_back(i);
+
+    // Perform divide-and-conquer to sort players
+    divideAndConquer(players, 0, N - 1);
+
+    // Print the final order of players
+    for (int i = 0; i < N; i++) cout << players[i] << "\n";
+
+    return 0;
+}
