@@ -51,7 +51,7 @@ void divideAndConquer(vector<int> &players, int low, int high) {
 
     quickselect(players, low, high, mid, v); // Select the dividing point
 
-    // Recursively divide the two halves
+
     divideAndConquer(players, low, mid - 1);
     divideAndConquer(players, mid + 1, high);
 }
