@@ -4,7 +4,8 @@
 #include <ctime>   // For seeding rand()
 using namespace std;
 
-int N; // Global variable for the number of players
+ // Global variable for the number of players [N]
+int N;
 
 // Declaration of compare function
 int compare(int player1, int player2, double v);
